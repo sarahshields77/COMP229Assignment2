@@ -1,7 +1,6 @@
 import User from '../models/user.model.js'
 	import extend from 'lodash/extend.js'
 	import errorHandler from './error.controller.js'
-import mongoose from 'mongoose'
 
 	const create = async (req, res) => { 
 const user = new User(req.body) 

@@ -1,29 +1,25 @@
-//crud operations
-module.exports = (app) => {
-    const products = require("../controllers/product.controller.js");
-  
-    var router = require("express").Router();
-  
-    // Create a new Product  
-    router.post("/", products.create);
-  
-    // Retrieve all Products  
-    router.get("/", products.findAll);
-  
-    // Retrieve all published Products  
-    router.get("/published", products.findAllPublished);
-  
-    // Retrieve a single Product with id  
-    router.get("/:id", products.findOne);
-  
-    // Update a Product with id  
-    router.put("/:id", products.update);
-  
-    // Delete a Product with id  
-    router.delete("/:id", products.delete);
-  
-    // Delete all Products  
-    router.delete("/", products.deleteAll);
-  
-    app.use("/api/products", router);
-  };
+import express from 'express'
+	import productCtrl from '../controllers/product.controller.js' 
+	const router = express.Router()
+	router.route('/api/products') 
+	.get(productCtrl.list)
+	.post(productCtrl.create)
+	router.route('/api/products/:productId') 
+	.get(productCtrl.read)
+	.put(productCtrl.update) 
+	.delete(productCtrl.remove)
+router.param('productId', productCtrl.productByID)
+router.route('/api/products').post(productCtrl.create) 
+router.route('/api/products').get(productCtrl.list)
+router.param('productId', productCtrl.productByID)
+router.route('/api/products/:productId').get(productCtrl.read)
+router.route('/api/products/:productId').put(productCtrl.update)
+router.route('/api/products/:productId').delete(productCtrl.remove)
+router.route('/api/products?name=[kw]').get(productCtrl.read)
+
+
+
+
+    
+    
+	export default router
